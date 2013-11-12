@@ -1,0 +1,12 @@
+add  into    Larry
+showTree
+add  intel   Jim
+showTree
+add  intel   Sue
+showTree
+add  integer Zebra
+showTree
+search  intel
+prefix  intern
+remove  integer
+showTree
