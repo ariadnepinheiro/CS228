@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.File;
 
 /**
- * @author XXXXX
+ * @author Darren Hushak
  * 
  *         An application class
  */

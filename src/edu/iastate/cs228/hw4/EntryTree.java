@@ -44,38 +44,32 @@ public class EntryTree<K, V> {
 
 		@Override
 		public EntryNode<K, V> parent() {
-			// TODO Auto-generated method stub
-			return null;
+			return parent;
 		}
 
 		@Override
 		public EntryNode<K, V> child() {
-			// TODO Auto-generated method stub
-			return null;
+			return child;
 		}
 
 		@Override
 		public EntryNode<K, V> next() {
-			// TODO Auto-generated method stub
-			return null;
+			return next;
 		}
 
 		@Override
 		public EntryNode<K, V> prev() {
-			// TODO Auto-generated method stub
-			return null;
+			return prev;
 		}
 
 		@Override
 		public K key() {
-			// TODO Auto-generated method stub
-			return null;
+			return key;
 		}
 
 		@Override
 		public V value() {
-			// TODO Auto-generated method stub
-			return null;
+			return value;
 		}
 	}
 
