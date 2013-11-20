@@ -180,7 +180,19 @@ public class EntryTree<K, V> {
 				// Witness the awesome power of childbirth
 				childNode = new Node(keyarr[i], null);
 				childNode.parent = cursor;
-				childNode.parent.child = childNode;
+
+				if (cursor.child == null) {
+					childNode.parent.child = childNode;
+				}
+				// Link to siblings
+				else {
+					Node siblingCursor = cursor.child;
+					while (siblingCursor.next != null){
+						siblingCursor = siblingCursor.next;
+					}
+					siblingCursor.next = childNode;
+					childNode.prev = siblingCursor;
+				}
 			}
 
 			// Point to the child. Mostly with a firm and disciplinary disdain,
@@ -280,7 +292,7 @@ public class EntryTree<K, V> {
 		// Iterates through all of the siblings until it either finds the
 		// sibling with the matching key, or reaches the end of the list (maybe
 		// they put that one up for adoption?)
-		while (!cursor.key.equals(key) || !cursor.key.equals(null)) {
+		while ((cursor != null) && !cursor.key.equals(key)) {
 			// Go to the next sibling
 			cursor = cursor.next;
 		}
@@ -357,9 +369,7 @@ public class EntryTree<K, V> {
 		}
 
 		// Advance through the siblings
-		while (cursor.next != null) {
-			// Recursive call - Prints all of this Node's children
-			printChildrenRecursive(numLevels + 1, cursor.child);
+		while (cursor != null) {
 
 			// Put dem tabs in to make it saucy lookin'
 			for (int i = 0; i < numLevels; i++) {
@@ -367,6 +377,9 @@ public class EntryTree<K, V> {
 			}
 			// Print out the key and value
 			System.out.print(cursor.key + " -> " + cursor.value + "\n");
+
+			// Recursive call - Prints all of this Node's children
+			printChildrenRecursive(numLevels + 1, cursor.child);
 			// Advance to next sibling
 			cursor = cursor.next;
 		}
