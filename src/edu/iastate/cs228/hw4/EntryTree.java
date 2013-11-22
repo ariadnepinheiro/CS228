@@ -373,7 +373,7 @@ public class EntryTree<K, V> {
 
 			// Put dem tabs in to make it saucy lookin'
 			for (int i = 0; i < numLevels; i++) {
-				System.out.print("\t");
+				System.out.print("   ");
 			}
 			// Print out the key and value
 			System.out.print(cursor.key + " -> " + cursor.value + "\n");
