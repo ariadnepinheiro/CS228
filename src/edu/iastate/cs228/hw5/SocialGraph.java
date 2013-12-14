@@ -6,7 +6,7 @@ import java.util.List;
  * Create a graph to model a social network of friendships.
  * See the homework description.
  * 
- * @author <Your name>
+ * @author Darren Hushak
  *
  */
 
@@ -39,7 +39,23 @@ public class SocialGraph {
 	 */
 	public static void main(String[] args) {
 		
-		// TODO
+		DiGraph<Integer> graph = new DiGraph<Integer>();
+		graph.print();
+		graph.addEdge(17,5,1);
+		graph.addEdge(3,5,1);
+		graph.addEdge(3,2,1);
+		graph.addEdge(2,5,1);
+
+		graph.addEdge(5,16,1);
+		graph.print();
+		System.out.println(graph.numEdges());
+		System.out.println("\n------------------------\n");
+		//graph.removeVertex(5);
+		graph.print();
+		System.out.println(graph.numEdges());
+
+		System.out.println("\n------------------------\n");
+		System.out.println(graph.Dijkstra(5));
 	}
 	
 	/**
