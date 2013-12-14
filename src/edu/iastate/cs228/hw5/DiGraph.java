@@ -58,7 +58,7 @@ public class DiGraph<V> {
 		Edge<V, Integer> newEdge = new Edge<V, Integer>(dst, c);
 
 		if (this.map.get(src).contains(newEdge)) {
-			// this.map.remove(newEdge);
+			this.map.get(src).remove(newEdge);
 			this.numEdges--;
 		}
 
@@ -204,6 +204,24 @@ public class DiGraph<V> {
 		return ret;
 	}
 
+	/**
+	 * Return a set of nodes with edges going out of this given vertex
+	 * 
+	 * @param vertex
+	 * @return empty set if the vertex is null or the vertex is not in this
+	 *         graph otherwise, return a non-empty set consists of nodes with
+	 *         edges going out of this vertex
+	 */
+	public Set<V> outgoingEdges(V vertex) {
+		Set<V> ret = new HashSet<V>();
+			for (Edge<V, Integer> outBoundEdge : this.map.get(vertex)) {
+				ret.add(outBoundEdge.getVertex());
+			}
+		
+
+		return ret;
+	}
+	
 	/**
 	 * Compute Dijkstra single source shortest path from the source node. Use
 	 * the algorithm discussed in class
