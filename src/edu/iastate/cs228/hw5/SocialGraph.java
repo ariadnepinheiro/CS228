@@ -5,8 +5,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Scanner;
-
 
 /**
  * Create a graph to model a social network of friendships. See the homework
@@ -44,8 +45,7 @@ public class SocialGraph {
 
 		// Create graph
 		DiGraph<String> social = new DiGraph<String>();
-		
-		
+
 		FileReader inputFile = null;
 		try {
 			// Get input file from args
@@ -63,20 +63,17 @@ public class SocialGraph {
 			System.exit(-1);
 		}
 
-		
-		
-		
 		// Start scanning
 		Scanner sc = new Scanner(inputFile);
 		while (sc.hasNextLine()) {
 			String line;
 			line = sc.nextLine(); // read the next line into a String object
-			System.out.println(line);//Print command
-			
+			System.out.println(line);// Print command
+
 			String[] sArr = line.split("\\s+"); // split the string by spaces
-			
+
 			if (sArr[0].equals("add")) {
-						social.addEdge(sArr[1], sArr[2], Integer.parseInt(sArr[3]));
+				social.addEdge(sArr[1], sArr[2], Integer.parseInt(sArr[3]));
 			}
 			if (sArr[0].equals("remove")) {
 				social.removeVertex(sArr[1]);
@@ -85,7 +82,13 @@ public class SocialGraph {
 				System.out.println(social.adjacentTo(sArr[1]));
 			}
 			if (sArr[0].equals("recommendFriends")) {
-				System.out.println(recommendFriends(social, sArr[1], sArr[2], Integer.parseInt(sArr[3])));
+				List<Edge<String, Integer>> list = recommendFriends(social,
+						sArr[1], sArr[2], Integer.parseInt(sArr[3]));
+				if (!list.isEmpty()) {
+					for (Edge<String, Integer> str : list) {
+						System.out.println(str);
+					}
+				}
 			}
 		}
 	}
@@ -138,10 +141,35 @@ public class SocialGraph {
 	 */
 	public static List<Edge<String, Integer>> recommendFriends(
 			DiGraph<String> g, String personOfInterest, String option, int topK) {
+
 		ArrayList<Edge<String, Integer>> ret = new ArrayList<Edge<String, Integer>>();
-		
-		
-		return ret; // TODO
+
+		Map<String, Integer> dist = g.Dijkstra(personOfInterest);
+		PriorityQueue<Edge<String, Integer>> distQueue = new PriorityQueue<Edge<String, Integer>>();
+		for (String key : dist.keySet()) {
+			Integer distanceToAdd = dist.get(key);
+			if (option.equals("weightedDist")) {
+				distanceToAdd *= (g.numEdges() - g.incomingEdges(key).size());
+			}
+
+			Edge<String, Integer> newEdge = new Edge<String, Integer>(key,
+					distanceToAdd);
+			if (!g.hasEdge(personOfInterest, key)) {
+				distQueue.add(newEdge);
+			}
+		}
+
+		// Remove self from friends list
+		distQueue.poll();
+		for (int i = 0; i < topK; i++) {
+			Edge<String, Integer> toAdd = distQueue.poll();
+			if (toAdd != null) {
+
+				ret.add(toAdd);
+			}
+		}
+
+		return ret;
 	}
 
 }
